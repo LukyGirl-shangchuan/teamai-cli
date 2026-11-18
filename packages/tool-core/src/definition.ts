@@ -1,7 +1,7 @@
 import type { JsonSyntax } from '@teamai/shared/json';
 
 /** The MCP config formats teamai writes (`src/resources/mcp-format.ts`); a tool's MCP channel names one. */
-export type McpFormat = 'claude' | 'cursor' | 'buddy' | 'codex' | 'opencode' | 'copilot' | 'pi' | 'muse' | 'agy' | 'openclaw' | 'hermes' | 'dsh';
+export type McpFormat = 'claude' | 'cursor' | 'buddy' | 'codex' | 'opencode' | 'copilot' | 'pi' | 'muse' | 'agy' | 'openclaw' | 'hermes' | 'dsh' | 'zero';
 
 /** The rule file formats teamai renders a team rule in (`src/resources/rule-format.ts`); a tool's rules directory names one, or takes the team `.md` verbatim. */
 export type RuleFormatId = 'cursor-mdc' | 'joycode' | 'copilot-instructions' | 'kiro-steering' | 'qoder' | 'trae' | 'codebuddy' | 'omp' | 'agy';

@@ -47,6 +47,7 @@ import {
   entryHash,
   museEntryHash,
   serverNameProblem,
+  holdsBareMcpServers,
   type McpJsonEntry,
 } from './resources/mcp-format.js';
 import {
@@ -5309,7 +5310,7 @@ async function installMcpServer(
     const serverKey = active ? mcpKeyOf(active) : place.key;
     const hash = entryHash(entry);
     const valueHash = format === 'muse' ? museEntryHash(entry) : undefined;
-    const allowBare = format === 'copilot' && projectScope;
+    const allowBare = holdsBareMcpServers(format, projectScope);
     const doc = await readJsonDoc(targetFile, serverKey, { allowBare, projectKey: active?.projectKey, syntax: (active ?? place).syntax, format });
 
     if (!doc) {
@@ -5572,7 +5573,7 @@ async function uninstallMcpServer(
         if (block !== null) keptHash = entryHash(block);
       } else {
         const doc = await readJsonDoc(targetFile, mcpKeyOf(recorded), {
-          allowBare: format === 'copilot' && projectScope, projectKey, syntax: recorded.syntax, format,
+          allowBare: holdsBareMcpServers(format, projectScope), projectKey, syntax: recorded.syntax, format,
         });
 
         if (doc?.servers[slug] !== undefined) keptHash = entryHash(doc.servers[slug]);
@@ -5587,7 +5588,7 @@ async function uninstallMcpServer(
       }
     } else {
       const serverKey = mcpKeyOf(recorded);
-      const allowBare = format === 'copilot' && projectScope;
+      const allowBare = holdsBareMcpServers(format, projectScope);
       const doc = await readJsonDoc(targetFile, serverKey, { allowBare, projectKey, syntax: recorded.syntax, format });
 
       if (!doc) throw new Error(`uninstall_mcp: cannot parse ${targetFile}. Ownership was kept; repair the config and uninstall the server again.`);

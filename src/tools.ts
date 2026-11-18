@@ -40,6 +40,7 @@ export const TOOL_IDS = [
   'opencode',
   'muse',
   'agy',
+  'zero',
 ] as const;
 
 /** A built-in tool (`TOOL_IDS`). */
@@ -90,6 +91,7 @@ export const TOOLS = {
   opencode: BUILT_IN_FACTS.opencode.tools.opencode,
   muse: BUILT_IN_FACTS.muse.tools.muse,
   agy: BUILT_IN_FACTS.agy.tools.agy,
+  zero: BUILT_IN_FACTS.zero.tools.zero,
 } as const satisfies Record<ToolId, ShippedDescriptor>;
 
 type Entry<T extends ToolId> = (typeof TOOLS)[T];
