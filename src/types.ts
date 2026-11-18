@@ -743,6 +743,18 @@ export const DEFAULT_TOOL_PATHS = {
     mcpProject: '.agents/plugins/teamai/mcp_config.json',
     userScope: { skills: '.gemini/config/skills', rules: '.gemini/config/rules', agents: '.gemini/config/agents' },
   },
+  // Zero (零号员工): its resources are spread over several roots — skills at .zeroagent, rules at .zerorules,
+  // and the rest (agents, MCP, AGENTS.md) under the .config/zero config root. Its MCP files hold servers bare
+  // at the top level. Only its user agents directory sits under a different prefix, hence userScope.
+  zero: {
+    skills: '.zeroagent/skills',
+    rules: '.zerorules',
+    agents: '.zeroagent/agents',
+    claudemd: 'AGENTS.md',
+    mcp: '.config/zero/mcp/mcp.json',
+    mcpProject: '.zeroagent/mcp.json',
+    userScope: { agents: '.config/zero/agents', claudemd: '.config/zero/AGENTS.md' },
+  },
 } satisfies Record<ToolId, z.infer<typeof ToolPathsSchema>>;
 
 export const TeamaiConfigBaseSchema = z.object({

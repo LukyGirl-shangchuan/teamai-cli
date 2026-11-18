@@ -61,6 +61,7 @@ export const MCP_SERVER_KEY: Record<Exclude<McpFormat, 'codex'>, string> = {
   openclaw: 'mcp',
   hermes: 'mcp_servers',
   dsh: 'insert',
+  zero: 'mcpServers',
 };
 
 /** A format whose servers live inside one JSON object under `MCP_SERVER_KEY[format]`; the native files are never shared with another tool. */
@@ -77,6 +78,7 @@ const JSON_SERVER_MAP_FORMAT: Record<McpFormat, boolean> = {
   openclaw: false,
   hermes: false,
   dsh: false,
+  zero: true,
 };
 
 /** Whether two formats keep their servers under one key of a shared file (Claude, Cursor and CodeBuddy all use `mcpServers`). */
@@ -114,10 +116,20 @@ const SUPPORTED_TRANSPORTS: Record<McpFormat, Set<McpTransport>> = {
   hermes: new Set<McpTransport>(['stdio', 'http', 'sse']),
   // DSH's mcp-client plugin has only `stdio` and `streamable-http`; there is no SSE transport to select.
   dsh: new Set<McpTransport>(['stdio', 'http']),
+  // Zero renders like OpenCode: `type: local` (stdio) and `type: remote` (streamable HTTP or SSE).
+  zero: new Set<McpTransport>(['stdio', 'http', 'sse']),
 };
 
 export function supportsTransport(format: McpFormat, transport: McpTransport): boolean {
   return SUPPORTED_TRANSPORTS[format].has(transport);
+}
+
+/**
+ * Whether the tool's MCP file holds its servers bare at the top level instead of under a key: Zero always (its
+ * `mcp.json` is a bare server map), Copilot in a project (its `.github/mcp.json` may be bare).
+ */
+export function holdsBareMcpServers(format: McpFormat, projectScope: boolean): boolean {
+  return format === 'zero' || (format === 'copilot' && projectScope);
 }
 
 /**
@@ -495,6 +507,8 @@ export function renderJsonEntry(format: Exclude<McpFormat, 'codex'>, def: McpSer
   if (format === 'cursor') return renderCursor(def);
 
   if (format === 'opencode') return renderOpencode(def);
+
+  if (format === 'zero') return renderOpencode(def);
 
   if (format === 'copilot') return renderCopilot(def);
 

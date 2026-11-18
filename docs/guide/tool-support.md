@@ -39,6 +39,7 @@ Rule and agent folder files: how the tool reads the files a user-scope rule or a
 | OpenCode | `~/.config/opencode` `$OPENCODE_CONFIG_DIR` `$XDG_CONFIG_HOME/opencode` | `~/.config/opencode/skills` v<br>`~/.claude/skills` v | `~/.config/opencode/rules` v | copy | `~/.config/opencode/teamai-context.md` v | `~/.config/opencode/agents` v | opencode-plugin s | `~/.config/opencode/opencode.json` v | opencode |
 | Muse Code | `~/.config/muse` `$XDG_CONFIG_HOME/muse` | `~/.config/muse/skills` v<br>`~/.agents/skills` v<br>`~/.claude/skills` v | in the blocks file (Muse Code AGENTS.md) | copy | `~/.config/muse/AGENTS.md` v | `~/.config/muse/agents` s | `~/.config/muse/settings.json` v | `~/.config/muse/settings.json` s | muse |
 | Antigravity | `~/.gemini/config` | `~/.gemini/config/skills` v<br>`~/.agents/skills` v | `~/.gemini/config/rules` v | copy | `~/.gemini/config/rules` v | `~/.gemini/config/agents` v | agy-hooks v | `~/.gemini/config/mcp_config.json` v | agy |
+| Zero (零号员工) | `~/.config/zero` | `~/.zeroagent/skills` v | `~/.zerorules` v | copy | `~/.config/zero/AGENTS.md` s | `~/.config/zero/agents` v | ? | `~/.config/zero/mcp/mcp.json` v | — |
 
 ## Project scope
 
@@ -71,6 +72,7 @@ Paths are relative to the project root. `cwd only`: the tool reads it only from 
 | OpenCode | `.opencode/skills` v<br>`.claude/skills` v | `.opencode/rules` v | `.opencode/teamai-context.md` v | `.opencode/agents` v | user hooks | `opencode.json` v<br>`.opencode/teamai-mcp.json` v |
 | Muse Code | `.agents/skills` v | session hook v | session hook v | written; reads ? | `.muse/hooks.json` v | `.mcp.json` s |
 | Antigravity | `.agents/skills` v | `.agents/rules` v | `.agents/rules` v | `.agents/agents` v | user hooks | `.agents/plugins/teamai/mcp_config.json` v |
+| Zero (零号员工) | `.zeroagent/skills` v | `.zerorules` v | `AGENTS.md` v | `.zeroagent/agents` s | ? | `.zeroagent/mcp.json` v |
 
 ## Run time and teamai's own AI
 
@@ -103,6 +105,7 @@ User scope, from #1221's matrix; a fix merged since is marked `t`, with a note. 
 | OpenCode | ? | ✓t | ✓d | ✓v | ✓t<sup>2</sup> | ✓v | ✓v | ✓t<sup>1</sup> | ✓v<sup>30</sup> |
 | Muse Code | ✓t | +v | ? | ✓t | ✓v | ✓t | ✓v | ✓t<sup>1</sup> | ✓t<sup>31</sup> |
 | Antigravity | ✓v<sup>32</sup> | ✓v | ✓d | ✓v | ✓v | ◐v<sup>33</sup> | ✓v | ✓t<sup>34</sup> | ✓t<sup>35</sup> |
+| Zero (零号员工) | ? | ? | ? | ? | ? | —t | —t | ? | —t |
 
 Notes:
 

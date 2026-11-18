@@ -47,6 +47,7 @@ const DETECTORS: Record<ToolId, VersionDetector | null> = {
   opencode: null,
   muse: BUILT_IN_FACTS.muse.detect.muse,
   agy: BUILT_IN_FACTS.agy.detect.agy,
+  zero: null,
 };
 
 /** The detector for `agentType`: a tool's, or the CodeBuddy IDE's (`codebuddy-ide`). */

@@ -61,6 +61,7 @@ const LABELS: ReadonlyMap<string, ToolId> = new Map(Object.entries({
   JoyCode: 'joycode',
   'Muse Code': 'muse',
   Antigravity: 'agy',
+  Zero: 'zero',
 } satisfies Record<string, ToolId>));
 
 /** Internal builds the README leaves out. */

@@ -16,9 +16,10 @@ import { facts as copilot } from '@teamai/tool-copilot/facts';
 import { facts as opencode } from '@teamai/tool-opencode/facts';
 import { facts as agy } from '@teamai/tool-agy/facts';
 import { facts as cursor } from '@teamai/tool-cursor/facts';
+import { facts as zero } from '@teamai/tool-zero/facts';
 
 /**
  * Every built-in tool family's facts: its tools and its session platforms, with no adapter, launch profile or schema.
  * This is what every command loads (teamai/family-facts); the families themselves (`BUILT_IN_TOOLS`) load where first used.
  */
-export const BUILT_IN_FACTS = { claude, codex, qoder, joycode, pi, codebuddy, kiro, trae, zcode, openclaw, hermes, dsh, muse, copilot, opencode, agy, cursor } as const satisfies Readonly<Record<string, ToolFamilyFacts>>;
+export const BUILT_IN_FACTS = { claude, codex, qoder, joycode, pi, codebuddy, kiro, trae, zcode, openclaw, hermes, dsh, muse, copilot, opencode, agy, cursor, zero } as const satisfies Readonly<Record<string, ToolFamilyFacts>>;

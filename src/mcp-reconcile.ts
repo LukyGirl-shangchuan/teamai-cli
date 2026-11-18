@@ -43,6 +43,7 @@ import {
   UntypedStdioEntrySchema,
   DSH_MCP_PLUGIN,
   serverNameProblem,
+  holdsBareMcpServers,
 } from './resources/mcp-format.js';
 import { type McpFormat } from '@teamai/tool-core/definition';
 import { deliverMcpFolders, historicalFolderMcpServer, pruneMcpFolders, TEAM_MCP_ENTRIES, parseTeamMcpServers, teamMcpDef, teamMcpToDef, type TeamMcpDefinition } from './resources/mcp.js';
@@ -1665,7 +1666,7 @@ export async function installedMcpEntries(
     return new Map(codexServerNames(raw).map((name) => [name, codexBlockIn(raw, name)]));
   }
 
-  const allowBare = target.format === 'copilot' && target.projectScope;
+  const allowBare = holdsBareMcpServers(target.format, target.projectScope);
   const doc = await readJsonDoc(target.file, mcpKeyOf(target), { allowBare, projectKey: target.projectKey, syntax: target.syntax, format: target.format });
 
   if (doc === null) return null;
@@ -2351,18 +2352,18 @@ export async function recordedMcpFileEvidence(targets: McpTarget[], owned?: McpO
 }
 
 /**
- * `target`'s servers under its format's key, and apart, a Copilot project file's bare ones, or null when
+ * `target`'s servers under its format's key, and apart, a bare file's top-level ones, or null when
  * the file does not parse (#882). `installedMcpEntries` merges the two by name, the keyed one winning: a
  * bare server beside one of its name under `mcpServers` is judged on its own here.
  */
 async function mcpEntriesByPlacement(target: McpTarget): Promise<{ keyed: Map<string, JsonValue>; bare: Map<string, JsonValue> } | null> {
-  if (target.format !== 'copilot' || !target.projectScope) {
+  if (!holdsBareMcpServers(target.format, target.projectScope)) {
     const keyed = await installedMcpEntries(target);
 
     return keyed && { keyed, bare: new Map() };
   }
 
-  const doc = await readJsonDoc(target.file, MCP_SERVER_KEY.copilot, { allowBare: true, syntax: target.syntax });
+  const doc = await readJsonDoc(target.file, mcpKeyOf(target), { allowBare: true, syntax: target.syntax });
 
   if (!doc) return null;
   const entries = (servers: JsonObject | undefined): Map<string, JsonValue> => new Map(Object.entries(servers ?? {}));
@@ -2372,7 +2373,7 @@ async function mcpEntriesByPlacement(target: McpTarget): Promise<{ keyed: Map<st
 
 /**
  * For a target of a file other tools map today, the servers their records own under its key, or, with
- * `bare`, at a Copilot project file's top level, where only Copilot writes.
+ * `bare`, at a bare file's top level, where only Copilot and Zero write.
  */
 export type McpOwnedFor = (target: McpTarget, options?: { bare?: boolean }) => readonly string[];
 
@@ -2387,7 +2388,7 @@ export function ownedByMappers(mappedBy: readonly string[], manifest: ManagedMcp
     .filter((tool) => {
       const format = mcpFormatOf(tool);
 
-      return format !== null && (options.bare ? format === 'copilot' : sameServerKey(format, target.format));
+      return format !== null && (options.bare ? holdsBareMcpServers(format, true) : sameServerKey(format, target.format));
     })
     .flatMap((tool) => manifest?.[managedMcpManifestKey(tool, true)] ?? []).map((record) => record.name);
 }
@@ -3952,7 +3953,7 @@ async function applyJson(
   restoreConfigs: Map<string, () => Promise<void>>,
 ): Promise<boolean | null> {
   const serverKey = mcpKeyOf(target);
-  const allowBare = target.format === 'copilot' && target.projectScope;
+  const allowBare = holdsBareMcpServers(target.format, target.projectScope);
   const doc = await readJsonDoc(target.file, serverKey, { allowBare, projectKey: target.projectKey, syntax: target.syntax, format: target.format });
 
   if (!doc) {

@@ -1,0 +1,10 @@
+{
+  "name": "@teamai/tool-zero",
+  "private": true,
+  "type": "module",
+  "description": "Zero (零号员工): its descriptor and facts; bundled into teamai-cli.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./facts": "./src/facts.ts"
+  }
+}

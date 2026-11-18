@@ -93,7 +93,7 @@ describe('detectHomeInstalledAgents', () => {
     expect(await detectHomeInstalledAgents(['cursor'])).toEqual(['cursor']);
   });
 
-  it('SELF_MODE_AGENT_CHOICES includes Pi, Copilot, JoyCode, Muse Code and Antigravity CLI among the common coding agents', () => {
+  it('SELF_MODE_AGENT_CHOICES includes Pi, Copilot, JoyCode, Muse Code, Antigravity CLI and Zero among the common coding agents', () => {
     expect([...SELF_MODE_AGENT_CHOICES]).toEqual([
       'claude',
       'codex',
@@ -105,6 +105,7 @@ describe('detectHomeInstalledAgents', () => {
       'workbuddy',
       'muse',
       'agy',
+      'zero',
     ]);
   });
 });

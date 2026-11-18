@@ -1338,6 +1338,7 @@ export function renderForTool(spec: AgentSpec, tool: ToolName, resolved?: Resolv
     case 'joycode': return renderForJoycode(target);
     case 'kiro': return renderForKiro(target);
     case 'opencode': return renderForOpencode(target, fields);
+    case 'zero': return { ext, content: renderMarkdownAgent(target, toolExtrasFor(spec, tool), fields) };
     case 'workbuddy': return renderForWorkbuddy(target);
     case 'muse': return renderForMuse(target);
     case 'agy': return renderForAgy(spec, resolved);
@@ -1396,6 +1397,8 @@ function reverseByParser(tool: ToolName, filePath: string, content: string): Rev
       return reverseFromClaude(filePath, content);
     case 'opencode':
       return reverseFromOpencode(filePath, content);
+    case 'zero':
+      return reverseFromClaude(filePath, content);
     case 'workbuddy':
       return reverseFromWorkbuddy(filePath, content);
     case 'muse':
