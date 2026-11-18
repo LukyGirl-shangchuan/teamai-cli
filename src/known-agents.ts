@@ -24,7 +24,7 @@ import { realHost, toolHome, type Host } from './tool-home.js';
  * Kept small on purpose — the common coding agents, not the full KNOWN_AGENTS list.
  */
 // oxlint-disable-next-line teamai/tool-facts -- the picker's choices in display order; a tool missing here is still detected
-export const SELF_MODE_AGENT_CHOICES = ['claude', 'codex', 'cursor', 'copilot', 'pi', 'joycode', 'codebuddy', 'workbuddy', 'muse', 'agy'] as const satisfies readonly ToolId[];
+export const SELF_MODE_AGENT_CHOICES = ['claude', 'codex', 'cursor', 'copilot', 'pi', 'joycode', 'codebuddy', 'workbuddy', 'muse', 'agy', 'zero'] as const satisfies readonly ToolId[];
 
 /**
  * Normalize the `--agent` option into a deduplicated id list.
@@ -120,6 +120,7 @@ export const KNOWN_AGENTS: KnownAgent[] = [
   { id: 'zcode', displayName: 'ZCode', category: 'coding', skillsPath: '.zcode/skills' },
   { id: 'muse', displayName: 'Muse Code', category: 'coding', skillsPath: '.config/muse/skills' },
   { id: 'agy', displayName: 'Antigravity', category: 'coding', skillsPath: '.gemini/config/skills' },
+  { id: 'zero', displayName: 'Zero (零号员工)', category: 'coding', skillsPath: '.zeroagent/skills' },
 
   // Lobster family
   { id: 'openclaw', displayName: 'OpenClaw', category: 'lobster', skillsPath: '.openclaw/skills' },

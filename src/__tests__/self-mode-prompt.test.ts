@@ -71,11 +71,11 @@ describe('promptForSelfModeAgents — interactive Auto option', () => {
     expect(result).toEqual(['cursor']);
   });
 
-  it('offers exactly 11 options (Auto + 10 tools)', async () => {
+  it('offers exactly 12 options (Auto + 11 tools)', async () => {
     vi.mocked(askSelection).mockResolvedValueOnce([0]);
     await promptForSelfModeAgents({});
     const [, itemCount] = vi.mocked(askSelection).mock.calls[0];
-    expect(itemCount).toBe(11);
+    expect(itemCount).toBe(12);
   });
 
   it('offers Muse Code with its ~/.config/muse root', async () => {
@@ -90,6 +90,13 @@ describe('promptForSelfModeAgents — interactive Auto option', () => {
     await promptForSelfModeAgents({});
     const printed = logSpy.mock.calls.map((c) => String(c[0])).join('\n');
     expect(printed).toContain('11. Antigravity  (.gemini/config)');
+  });
+
+  it('offers Zero (零号员工) with its ~/.config/zero root', async () => {
+    vi.mocked(askSelection).mockResolvedValueOnce([0]);
+    await promptForSelfModeAgents({});
+    const printed = logSpy.mock.calls.map((c) => String(c[0])).join('\n');
+    expect(printed).toContain('12. Zero (零号员工)  (.config/zero)');
   });
 
   it('renders "none detected" when HOME has no known tools, and Auto → claude', async () => {

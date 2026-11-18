@@ -248,6 +248,22 @@ const COMPLETE_ROWS: readonly MatrixRow[] = [
     source: 'Copilot CLI 1.0.98 mcp list, issue #1221 Matrix; 1.0.105 mcp list shows workspace servers only in a trusted folder',
   },
   {
+    tool: 'zero', scope: 'user',
+    writes: [{ at: '~/.config/zero/mcp/mcp.json', key: ['mcpServers'] }],
+    existingDirs: ['~/.zeroagent'],
+    installed: { probe: '~/.zeroagent', met: true },
+    reads: [{ at: '~/.config/zero/mcp/mcp.json', key: ['mcpServers'], when: 'always' }],
+    source: 'Zero extension source: user MCP servers in ~/.config/zero/mcp/mcp.json',
+  },
+  {
+    tool: 'zero', scope: 'project',
+    writes: [{ at: '<root>/.zeroagent/mcp.json', key: ['mcpServers'] }],
+    existingDirs: ['<root>/.zeroagent'],
+    installed: { probe: '<root>/.zeroagent', met: true },
+    reads: [{ at: '<root>/.zeroagent/mcp.json', key: ['mcpServers'], when: 'workspaceUnder' }],
+    source: 'Zero extension source: project MCP servers in .zeroagent/mcp.json',
+  },
+  {
     tool: 'qoder', scope: 'user',
     writes: [{ at: '~/.qoder/settings.json', key: ['mcpServers'] }],
     existingDirs: ['~/.qoder'],

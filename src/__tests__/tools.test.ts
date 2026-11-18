@@ -71,6 +71,8 @@ describe('TOOLS home', () => {
     'claude.mcp': 'Claude Code keeps its user MCP servers in ~/.claude.json, beside ~/.claude',
     'hermes.claudemd': 'retired ~/AGENTS.md, kept only so cleanup can find it; Hermes reads SOUL.md',
     'workbuddy.claudemd': 'retired ~/AGENTS.md, kept only so cleanup can find it',
+    'zero.skills': 'Zero keeps its skills at ~/.zeroagent/skills, beside the config root',
+    'zero.rules': 'Zero loads every .md in ~/.zerorules, beside the config root',
   };
 
   it('holds every user-scope path of the tool, apart from the listed exceptions', () => {
